@@ -1,0 +1,434 @@
+{
+	"info": {
+		"_postman_id": "9075ca9f-17f6-4308-b57c-053506de65aa",
+		"name": "Trello",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31601837"
+	},
+	"item": [
+		{
+			"name": "1- Create a board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"pm.globals.set(\"board_id\", jsonData.id);\r",
+							"\r",
+							"pm.test(\"Status code 500\", function(){\r",
+							"    pm.response.to.have.status(500);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 600ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response include id field\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.trello.com/1/boards/?key=a5d5da5f84ae398830a57c6968fdffe8&token=ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0&name=Nuevo board",
+					"protocol": "https",
+					"host": [
+						"api",
+						"trello",
+						"com"
+					],
+					"path": [
+						"1",
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "a5d5da5f84ae398830a57c6968fdffe8"
+						},
+						{
+							"key": "token",
+							"value": "ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0"
+						},
+						{
+							"key": "name",
+							"value": "Nuevo board"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2- Create a List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"pm.globals.set(\"list_id\", jsonData.id);\r",
+							"\r",
+							"pm.test(\"Status code 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response include id field\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.trello.com/1/lists?key=a5d5da5f84ae398830a57c6968fdffe8&token=ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0&name=New List&idBoard={{board_id}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"trello",
+						"com"
+					],
+					"path": [
+						"1",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "a5d5da5f84ae398830a57c6968fdffe8"
+						},
+						{
+							"key": "token",
+							"value": "ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0"
+						},
+						{
+							"key": "name",
+							"value": "New List"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{board_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3- Update List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://api.trello.com/1/lists/{{list_id}}?key=a5d5da5f84ae398830a57c6968fdffe8&token=ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0&name=Update list",
+					"protocol": "https",
+					"host": [
+						"api",
+						"trello",
+						"com"
+					],
+					"path": [
+						"1",
+						"lists",
+						"{{list_id}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "a5d5da5f84ae398830a57c6968fdffe8"
+						},
+						{
+							"key": "token",
+							"value": "ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0"
+						},
+						{
+							"key": "name",
+							"value": "Update list"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4- Create a Card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"pm.globals.set(\"card_id\", jsonData.id);\r",
+							"\r",
+							"pm.test(\"Status code 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response include id field\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.trello.com/1/cards?key=a5d5da5f84ae398830a57c6968fdffe8&token=ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0&idList={{list_id}}&name=New card&desc=Description&pos=top&dueComplete=false&due=01/03/2026&urlSource=http://google.com",
+					"protocol": "https",
+					"host": [
+						"api",
+						"trello",
+						"com"
+					],
+					"path": [
+						"1",
+						"cards"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "a5d5da5f84ae398830a57c6968fdffe8"
+						},
+						{
+							"key": "token",
+							"value": "ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0"
+						},
+						{
+							"key": "idList",
+							"value": "{{list_id}}"
+						},
+						{
+							"key": "name",
+							"value": "New card"
+						},
+						{
+							"key": "desc",
+							"value": "Description"
+						},
+						{
+							"key": "pos",
+							"value": "top"
+						},
+						{
+							"key": "dueComplete",
+							"value": "false"
+						},
+						{
+							"key": "due",
+							"value": "01/03/2026"
+						},
+						{
+							"key": "urlSource",
+							"value": "http://google.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5- Modify a Card",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response include id field\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.trello.com/1/cards/{{card_id}}?key=a5d5da5f84ae398830a57c6968fdffe8&token=ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0&name=The new card is so nice&desc=This is a description modified",
+					"protocol": "https",
+					"host": [
+						"api",
+						"trello",
+						"com"
+					],
+					"path": [
+						"1",
+						"cards",
+						"{{card_id}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "a5d5da5f84ae398830a57c6968fdffe8"
+						},
+						{
+							"key": "token",
+							"value": "ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0"
+						},
+						{
+							"key": "name",
+							"value": "The new card is so nice"
+						},
+						{
+							"key": "desc",
+							"value": "This is a description modified"
+						},
+						{
+							"key": "due",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "closed",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "idList",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "idLabels",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "idBoard",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "pos",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "dueComplete",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6- Delete a Board",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api.trello.com/1/boards/{{board_id}}?key=a5d5da5f84ae398830a57c6968fdffe8&token=ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0&name=Nuevo board",
+					"protocol": "https",
+					"host": [
+						"api",
+						"trello",
+						"com"
+					],
+					"path": [
+						"1",
+						"boards",
+						"{{board_id}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "a5d5da5f84ae398830a57c6968fdffe8"
+						},
+						{
+							"key": "token",
+							"value": "ATTAa355171eaf745d9c2611772721be6e99a91a1bc5b62d20c1548d32140c0ea93cDEC439B0"
+						},
+						{
+							"key": "name",
+							"value": "Nuevo board"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
